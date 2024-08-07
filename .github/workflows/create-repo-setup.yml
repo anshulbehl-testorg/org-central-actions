@@ -1,0 +1,25 @@
+name: Setup New Repositories
+
+on:
+  repository:
+    types: [created]
+
+jobs:
+  setup-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the new repository
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.repository.full_name }}
+
+      - name: Create test folder
+        run: |
+          mkdir -p test
+          touch test/.gitkeep
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add test/.gitkeep
+          git commit -m "Add test folder on repository creation"
+          git push
