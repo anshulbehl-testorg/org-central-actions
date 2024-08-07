@@ -1,0 +1,28 @@
+name: Create Test Folder
+
+on:
+  repository_dispatch:
+    types: [create-test-folder]
+
+jobs:
+  create-test-folder:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create test folder
+        run: |
+          mkdir -p test
+          touch test/.gitkeep
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add test/.gitkeep
+          git commit -m "Create test folder"
+          git push origin HEAD
