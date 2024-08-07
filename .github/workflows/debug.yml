@@ -21,10 +21,10 @@ jobs:
 
       - name: Commit and push changes
         env:
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git add debug-folder/.gitkeep
           git commit -m "Create debug folder"
-          git push https://$PERSONAL_ACCESS_TOKEN@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+          git push https://$GITHUB_TOKEN@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
