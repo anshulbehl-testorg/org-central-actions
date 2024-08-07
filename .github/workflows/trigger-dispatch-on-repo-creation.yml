@@ -1,27 +1,25 @@
-name: Trigger Dispatch on Repository Creation
+name: Repository Creation Listener
 
 on:
   create:
     types: [repository]
-# test
+
 jobs:
-  trigger-dispatch:
+  trigger-new-repo-workflow:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger repository_dispatch
+      - name: Trigger new repository setup
         uses: actions/github-script@v5
         with:
           script: |
             const repo = context.payload.repository.full_name;
-            const response = await github.repos.createDispatchEvent({
+            console.log(`Repository: ${repo}`);
+            const response = await github.rest.repos.createDispatchEvent({
               owner: context.repo.owner,
-              repo: 'org-central_actions', // Central repository name
+              repo: repo,
               event_type: 'create-test-folder',
-              client_payload: {
-                repository: repo
-              }
             });
-            console.log(response);
+            console.log(`Dispatch Event Response: ${JSON.stringify(response.data)}`);
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
