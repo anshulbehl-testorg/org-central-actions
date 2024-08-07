@@ -12,7 +12,8 @@ jobs:
       - name: Log webhook payload
         run: echo '${{ toJson(github.event) }}'
         
-      - name: Remove branch protection from new repository
+      - if: github.event.action == 'repository_created'
+        name: Remove branch protection from new repository
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
@@ -23,10 +24,12 @@ jobs:
             -H "Authorization: token $GITHUB_TOKEN" \
             https://api.github.com/repos/$new_repo/branches/main/protection
     
-      - name: Checkout central repository
+      - if: github.event.action == 'repository_created'
+        name: Checkout central repository
         uses: actions/checkout@v2
 
-      - name: Trigger new repository setup
+      - if: github.event.action == 'repository_created'
+        name: Trigger new repository setup
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
         run: |
