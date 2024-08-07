@@ -1,0 +1,36 @@
+name: Debug Workflow
+
+on:
+  workflow_dispatch: # Allows you to trigger this workflow manually from the Actions tab
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Set debug environment variables
+        run: |
+          echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
+          echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
+
+      - name: Trigger repository_dispatch
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const repo = context.payload.repository.full_name || 'YOUR_ORG/REPO_NAME';
+            console.log('Repository:', repo);
+            const response = await github.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: 'org-central_actions', // Central repository name
+              event_type: 'create-test-folder',
+              client_payload: {
+                repository: repo
+              }
+            });
+            console.log('Dispatch Event Response:', response);
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
