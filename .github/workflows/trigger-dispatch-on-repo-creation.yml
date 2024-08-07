@@ -1,8 +1,8 @@
 name: Trigger Dispatch on Repository Creation
 
 on:
-  repository:
-    types: [created]
+  create:
+    types: [repository]
 
 jobs:
   trigger-dispatch:
