@@ -1,31 +1,32 @@
 name: Repository Creation Listener
 
 on:
-  create:
-    types: [repository]
   workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+    inputs:
+      target_repo:
+        description: 'The name of the target repository'
+        required: true
+        default: 'test-project2222_test' # Replace with a placeholder
 
 jobs:
   trigger-new-repo-workflow:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger new repository setup
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const repo = 'test-project2222_test'; // Replace with the actual new repo name
-            console.log(`Repository: ${repo}`);
-            try {
-              const response = await github.rest.repos.createDispatchEvent({
-                owner: context.repo.owner,
-                repo: repo,
-                event_type: 'create-test-folder',
-              });
-              console.log(`Dispatch Event Response: ${JSON.stringify(response.data)}`);
-            } catch (error) {
-              console.error(`Error triggering dispatch event: ${error}`);
-              throw error;
-            }
+      - name: Checkout central repository
+        uses: actions/checkout@v2
+
+      - name: Create test folder in target repository
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          target_repo="${{ github.event.inputs.target_repo }}"
+          git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository_owner }}/$target_repo.git
+          cd $target_repo
+          mkdir -p test
+          touch test/.gitkeep
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add test/.gitkeep
+          git commit -m "Create test folder"
+          git push
