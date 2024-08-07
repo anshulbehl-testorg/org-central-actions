@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Trigger new repository setup
-        #env:
-        #  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
         run: |
           new_repo="${{ github.event.client_payload.repository }}"
           echo "New repository: ${new_repo}"
