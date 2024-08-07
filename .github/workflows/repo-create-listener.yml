@@ -1,0 +1,30 @@
+name: Repository Creation Listener
+
+on:
+  create:
+    types: [repository]
+
+jobs:
+  trigger-new-repo-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger new repository setup
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const repo = context.payload.repository.full_name;
+            console.log(`Repository: ${repo}`);
+            try {
+              const response = await github.rest.repos.createDispatchEvent({
+                owner: context.repo.owner,
+                repo: repo,
+                event_type: 'create-test-folder-test',
+              });
+              console.log(`Dispatch Event Response: ${JSON.stringify(response.data)}`);
+            } catch (error) {
+              console.error(`Error triggering dispatch event: ${error}`);
+              throw error;
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
