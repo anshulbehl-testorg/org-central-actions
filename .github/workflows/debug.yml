@@ -1,36 +1,27 @@
-name: Debug Workflow
+name: Debug Create Folder
 
 on:
-  workflow_dispatch: # Allows you to trigger this workflow manually from the Actions tab
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
 jobs:
-  debug:
+  create-folder:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set debug environment variables
+      - name: Create a debug folder
         run: |
-          echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
-          echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
+          mkdir -p debug-folder
+          touch debug-folder/.gitkeep
 
-      - name: Trigger repository_dispatch
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const repo = context.payload.repository.full_name || 'YOUR_ORG/REPO_NAME';
-            console.log('Repository:', repo);
-            const response = await github.repos.createDispatchEvent({
-              owner: context.repo.owner,
-              repo: 'org-central_actions', // Central repository name
-              event_type: 'create-test-folder',
-              client_payload: {
-                repository: repo
-              }
-            });
-            console.log('Dispatch Event Response:', response);
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add debug-folder/.gitkeep
+          git commit -m "Create debug folder"
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
