@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Log webhook payload
         run: echo '${{ toJson(github.event) }}'
+
+      - name: Log webhook payload
+        run: echo '${{ toJson(github.event.action) }}'
         
       - name: Remove branch protection from new repository
         env:
