@@ -16,7 +16,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          new_repo="${{ github.event.client_payload.repository.full_name }}"
+          new_repo="${{ github.event.client_payload.repository }}"
           echo "New repository: ${new_repo}"
           curl -X DELETE \
             -H "Accept: application/vnd.github.v3+json" \
@@ -30,7 +30,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
         run: |
-          new_repo="${{ github.event.client_payload.repository.full_name }}"
+          new_repo="${{ github.event.client_payload.repository }}"
           echo "New repository: ${new_repo}"
           git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN}}@github.com/${new_repo}.git
           cd $(basename ${new_repo})
