@@ -22,6 +22,4 @@ jobs:
           git config --global user.name "GitHub Action"
           git add debug-folder/.gitkeep
           git commit -m "Create debug folder"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          git push https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
