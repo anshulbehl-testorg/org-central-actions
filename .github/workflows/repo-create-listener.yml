@@ -1,0 +1,29 @@
+name: Repository Creation Listener
+
+on:
+  repository_dispatch:
+    types: [repository_created]
+
+jobs:
+  add-folder:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout central repository
+        uses: actions/checkout@v2
+
+      - name: Trigger new repository setup
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
+        run: |
+          new_repo="${{ github.event.client_payload.repository }}"
+          echo "New repository: ${new_repo}"
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${new_repo}.git
+          cd $(basename ${new_repo})
+          mkdir -p test
+          touch test/.gitkeep
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add test/.gitkeep
+          git commit -m "Create test folder"
+          git push origin HEAD
