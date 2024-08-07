@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Log webhook payload
+        run: echo '${{ toJson(github.event.client_payload) }}'
+        
       - name: Remove branch protection from new repository
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
