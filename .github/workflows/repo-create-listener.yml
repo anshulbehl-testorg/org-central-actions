@@ -18,7 +18,7 @@ jobs:
         run: |
           new_repo="${{ github.event.client_payload.repository }}"
           echo "New repository: ${new_repo}"
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${new_repo}.git
+          git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN}}@github.com/${new_repo}.git
           cd $(basename ${new_repo})
           mkdir -p test
           touch test/.gitkeep
