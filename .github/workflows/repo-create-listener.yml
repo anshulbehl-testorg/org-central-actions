@@ -3,6 +3,7 @@ name: Repository Creation Listener
 on:
   create:
     types: [repository]
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
 jobs:
   trigger-new-repo-workflow:
@@ -13,13 +14,13 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const repo = context.payload.repository.full_name;
+            const repo = 'anshulbehl-testorg/org-central_actions'; // Replace with the actual new repo name
             console.log(`Repository: ${repo}`);
             try {
               const response = await github.rest.repos.createDispatchEvent({
                 owner: context.repo.owner,
                 repo: repo,
-                event_type: 'create-test-folder-test',
+                event_type: 'create-test-folder',
               });
               console.log(`Dispatch Event Response: ${JSON.stringify(response.data)}`);
             } catch (error) {
@@ -27,4 +28,4 @@ jobs:
               throw error;
             }
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
