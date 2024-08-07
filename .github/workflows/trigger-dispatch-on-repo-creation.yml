@@ -9,17 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger new repository setup
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const repo = context.payload.repository.full_name;
-            console.log(`Repository: ${repo}`);
-            const response = await github.rest.repos.createDispatchEvent({
-              owner: context.repo.owner,
-              repo: repo,
-              event_type: 'create-test-folder',
-            });
-            console.log(`Dispatch Event Response: ${JSON.stringify(response.data)}`);
+      - name: Checkout central repository
+        uses: actions/checkout@v2
+
+      - name: Create test folder in new repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          new_repo="${{ github.event.repository.full_name }}"
+          git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${new_repo}.git
+          cd $(basename ${new_repo})
+          mkdir -p test
+          touch test/.gitkeep
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add test/.gitkeep
+          git commit -m "Create test folder"
+          git push
