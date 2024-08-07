@@ -16,7 +16,7 @@ jobs:
             const repo = context.payload.repository.full_name;
             const response = await github.repos.createDispatchEvent({
               owner: context.repo.owner,
-              repo: 'org-central-actions', // Central repository name
+              repo: 'org-central_actions', // Central repository name
               event_type: 'create-test-folder',
               client_payload: {
                 repository: repo
