@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Create test folder
         run: |
@@ -27,4 +25,4 @@ jobs:
           git config --global user.name "GitHub Action"
           git add test/.gitkeep
           git commit -m "Create test folder"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+          git push origin HEAD
