@@ -9,6 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Remove branch protection from new repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          new_repo="${{ github.event.repository.full_name }}"
+          echo "New repository: ${new_repo}"
+          curl -X DELETE \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/$new_repo/branches/main/protection
+    
       - name: Checkout central repository
         uses: actions/checkout@v2
 
