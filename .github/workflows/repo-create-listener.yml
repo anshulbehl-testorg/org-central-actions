@@ -62,5 +62,5 @@ jobs:
           git config --global user.name "GitHub Action"
           
           # Add and commit changes
-          git add devfile.yml collections/requirements.yml
+          git add devfile.yaml collections/requirements.yml
           git commit -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
