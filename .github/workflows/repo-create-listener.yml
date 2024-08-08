@@ -43,19 +43,21 @@ jobs:
           
           # Update devfile.yaml
           if [ -f devfile.yaml ]; then
-            yq eval '.commands += [{"id": "install-collections", "exec": {"component": "tooling-container", "commandLine": "ansible-galaxy collection install -r collections/requirements.yml", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
-            yq eval '.events.postStart += ["install-collections"]' -i devfile.yaml
-          else
-            echo "devfile.yaml not found in the repository."
-          fi
+            if ! yq eval '.commands[] | select(.id == "install-collections")' devfile.yml; then
+              yq eval '.commands += [{"id": "install-collections", "exec": {"component": "tooling-container", "commandLine": "ansible-galaxy collection install -r collections/requirements.yml", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
+              yq eval '.events.postStart += ["install-collections"]' -i devfile.yaml
+            fi
 
           # Update devfile.yml to include git configuration
-          if [ -f devfile.yaml ]; then
-            yq eval '.commands += [{"id": "configure-git", "exec": {"component": "tooling-container", "commandLine": "git config --global user.name \"GitHub Action\" && git config --global user.email \"action@github.com\"", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
-            yq eval '.events.postStart += ["configure-git"]' -i devfile.yaml
+            if ! yq eval '.commands[] | select(.id == "configure-git")' devfile.yml; then
+              yq eval '.commands += [{"id": "configure-git", "exec": {"component": "tooling-container", "commandLine": "git config --global user.name \"GitHub Action\" && git config --global user.email \"action@github.com\"", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
+              yq eval '.events.postStart += ["configure-git"]' -i devfile.yaml
+           fi
+         
           else
-            echo "devfile.yaml not found in the repository."
+            echo "devfile.yml not found in the repository."
           fi
+
 
           # Update or create collections/requirements.yml
           mkdir -p collections
