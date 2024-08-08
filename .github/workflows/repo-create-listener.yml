@@ -10,10 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Log webhook payload
+      - if: ${{ github.event.action == 'repository_created' }}
+        name: Log webhook payload
         run: echo '${{ toJson(github.event) }}'
         
-      - name: Remove branch protection from new repository
+      - if: ${{ github.event.action == 'repository_created' }}
+        name: Remove branch protection from new repository
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
