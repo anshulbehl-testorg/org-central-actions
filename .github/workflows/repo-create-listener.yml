@@ -41,12 +41,12 @@ jobs:
           sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.8/yq_linux_amd64 -O /usr/bin/yq
           sudo chmod +x /usr/bin/yq
           
-          # Update devfile.yml
-          if [ -f devfile.yml ]; then
+          # Update devfile.yaml
+          if [ -f devfile.yaml ]; then
             yq eval '.commands += [{"id": "install-collections", "exec": {"component": "tooling-container", "commandLine": "ansible-galaxy collection install -r collections/requirements.yml", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yml
-            yq eval '.events.postStart += ["install-collections"]' -i devfile.yml
+            yq eval '.events.postStart += ["install-collections"]' -i devfile.yaml
           else
-            echo "devfile.yml not found in the repository."
+            echo "devfile.yaml not found in the repository."
           fi
 
           # Update or create collections/requirements.yml
@@ -63,4 +63,4 @@ jobs:
           
           # Add and commit changes
           git add devfile.yml collections/requirements.yml
-          git commit -m "Update devfile.yml and add amazon.aws to collections/requirements.yml"
+          git commit -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
