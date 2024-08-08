@@ -29,16 +29,38 @@ jobs:
 
       - name: Trigger new repository setup
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           new_repo="${{ github.event.client_payload.repository }}"
           echo "New repository: ${new_repo}"
-          git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN}}@github.com/${new_repo}.git
+          git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${new_repo}.git
           cd $(basename ${new_repo})
-          mkdir -p test
-          touch test/.gitkeep
+
+          # Install yq for YAML processing
+          sudo apt-get update && sudo apt-get install -y jq
+          sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.8/yq_linux_amd64 -O /usr/bin/yq
+          sudo chmod +x /usr/bin/yq
+          
+          # Update devfile.yml
+          if [ -f devfile.yml ]; then
+            yq eval '.commands += [{"id": "install-collections", "exec": {"component": "tooling-container", "commandLine": "ansible-galaxy collection install -r collections/requirements.yml", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yml
+            yq eval '.events.postStart += ["install-collections"]' -i devfile.yml
+          else
+            echo "devfile.yml not found in the repository."
+          fi
+
+          # Update or create collections/requirements.yml
+          mkdir -p collections
+          if [ -f collections/requirements.yml ]; then
+            yq eval '.collections += [{"name": "amazon.aws"}]' -i collections/requirements.yml
+          else
+            echo "collection reqs not found in the repository."
+          fi
+
+          # Configure git
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git add test/.gitkeep
-          git commit -m "Create test folder"
-          git push origin HEAD
+          
+          # Add and commit changes
+          git add devfile.yml collections/requirements.yml
+          git commit -m "Update devfile.yml and add amazon.aws to collections/requirements.yml"
