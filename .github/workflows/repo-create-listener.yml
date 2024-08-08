@@ -49,6 +49,14 @@ jobs:
             echo "devfile.yaml not found in the repository."
           fi
 
+          # Update devfile.yml to include git configuration
+          if [ -f devfile.yaml ]; then
+            yq eval '.commands += [{"id": "configure-git", "exec": {"component": "tooling-container", "commandLine": "git config --global user.name \\"GitHub Action\\" && git config --global user.email \\"action@github.com\\"", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
+            yq eval '.events.postStart += ["configure-git"]' -i devfile.yaml
+          else
+            echo "devfile.yaml not found in the repository."
+          fi
+
           # Update or create collections/requirements.yml
           mkdir -p collections
           if [ -f collections/requirements.yml ]; then
