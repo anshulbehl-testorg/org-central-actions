@@ -6,16 +6,14 @@ on:
 
 jobs:
   add-folder:
-    if: ${{ github.event.action == 'repository_created' }}
+    if: ${{ github.event.client_payload.repository }}
     runs-on: ubuntu-latest
 
     steps:
-      - if: ${{ github.event.action == 'repository_created' }}
-        name: Log webhook payload
+      - name: Log webhook payload
         run: echo '${{ toJson(github.event) }}'
         
-      - if: ${{ github.event.action == 'repository_created' }}
-        name: Remove branch protection from new repository
+      - name: Remove branch protection from new repository
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
