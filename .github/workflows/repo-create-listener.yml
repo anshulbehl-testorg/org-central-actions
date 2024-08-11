@@ -53,10 +53,18 @@ jobs:
               yq eval '.commands += [{"id": "configure-git", "exec": {"component": "tooling-container", "commandLine": "git config --global user.name \"GitHub Action\" && git config --global user.email \"action@github.com\"", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
               yq eval '.events.postStart += ["configure-git"]' -i devfile.yaml
            fi
+
+            # Add environment variables for AWS credentials and Automation Hub token
+            if ! yq eval '.components[] | select(.name == "tooling-container")' devfile.yaml; then
+              yq eval '.components += [{"name": "tooling-container", "container": {"env": [{"name": "AWS_ACCESS_KEY_ID", "value": "${{ secrets.AWS_ACCESS_KEY_ID }}"}, {"name": "AWS_SECRET_ACCESS_KEY", "value": "${{ secrets.AWS_SECRET_ACCESS_KEY }}"}, {"name": "AUTOMATION_HUB_TOKEN", "value": "${{ secrets.AH_TOKEN }}"}]}}]' -i devfile.yaml
+            else
+              yq eval '.components[].container.env += [{"name": "AWS_ACCESS_KEY_ID", "value": "${{ secrets.AWS_ACCESS_KEY_ID }}"}, {"name": "AWS_SECRET_ACCESS_KEY", "value": "${{ secrets.AWS_SECRET_ACCESS_KEY }}"}, {"name": "AUTOMATION_HUB_TOKEN", "value": "${{ secrets.AH_TOKEN }}"}]' -i devfile.yaml
+            fi
          
           else
             echo "devfile.yml not found in the repository."
           fi
+
 
 
           # Update or create collections/requirements.yml
