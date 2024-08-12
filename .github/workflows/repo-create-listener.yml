@@ -91,19 +91,16 @@ jobs:
           # Configure git
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-
-          ls -la ..
-
-          cp -R ../comtroller-configuration .
-          git add .
-          git commit -m "Add directory from org-central-actions"
-          git push origin main
           
           # Add and commit changes
           git add devfile.yaml collections/requirements.yml requirements.txt
           git commit -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin HEAD
 
+          cp -R ../comtroller_configuration .
+          git add .
+          git commit -m "Add directory from org-central-actions"
+          git push origin main
 
 
       - name: Set branch protection for main
