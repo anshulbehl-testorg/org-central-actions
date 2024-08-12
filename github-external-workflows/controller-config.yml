@@ -23,10 +23,10 @@ jobs:
           ls -al
           repo_name=$(basename ${{ github.event.repository.clone_url }} .git)
           git_url="${{ github.event.repository.clone_url }}"
-          yq e -i ".controller_projects[0].name = \"BLUEPRINT PROJ-$repo_name\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_projects[0].name = \"$(echo BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_projects[0].scm_url = \"$git_url\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].name = \"BLUEPRINT-$repo_name\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].project = \"BLUEPRINT PROJ-$repo_name\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[0].name = \"$(echo BLUEPRINT \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[0].project = \"$(echo BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
 
       - name: Run Ansible Playbook to Configure Controller
         run: ansible-galaxy collection install infra.controller_configuration && ansible-playbook controller_configuration/controller_configuration.yml
