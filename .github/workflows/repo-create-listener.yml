@@ -75,7 +75,7 @@ jobs:
           fi
 
           # Create requirements.txt with boto3 and botocore
-          echo "boto3\nbotocore" > requirements.txt
+          echo -e "boto3\nbotocore" > requirements.txt
 
           # Configure git
           git config --global user.email "action@github.com"
