@@ -93,7 +93,7 @@ jobs:
           git config --global user.name "GitHub Action"
 
           cp -R ../comtroller_configuration .
-          cp ../github-external-workflows/controller-config.yml ./github/workflows/
+          cp ../github-external-workflows/controller-config.yml ./.github/workflows/
           cp ../playbooks/* .
           git add .
           git commit -m "Add directory from org-central-actions and Update devfile.yaml and add amazon.aws to collections/requirements.yml"
