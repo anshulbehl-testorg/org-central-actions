@@ -92,7 +92,7 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
-          cp -R ../comtroller_configuration .
+          cp -R ../controller_configuration .
           cp ../github-external-workflows/controller-config.yml ./.github/workflows/
           cp ../playbooks/* .
           git add .
