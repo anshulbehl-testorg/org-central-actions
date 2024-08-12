@@ -66,12 +66,17 @@ jobs:
 
 
 
-          # Update or create collections/requirements.yml
+          # Update or create collections/requirements.yml without duplication
           mkdir -p collections
           if [ -f collections/requirements.yml ]; then
-            yq eval '.collections += [{"name": "amazon.aws"}]' -i collections/requirements.yml
+            if ! yq eval '.collections[] | select(.name == "amazon.aws")' collections/requirements.yml > /dev/null 2>&1; then
+              yq eval '.collections += [{"name": "amazon.aws"}]' -i collections/requirements.yml
+            else
+              echo "amazon.aws collection already exists in requirements.yml, not adding again."
+            fi
           else
-            echo "collection reqs not found in the repository."
+            echo "collections/requirements.yml not found, creating a new one."
+            echo "---\ncollections:\n  - name: amazon.aws" > collections/requirements.yml
           fi
 
           # Check if requirements.txt exists, and create it if it doesn't
