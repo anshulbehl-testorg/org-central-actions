@@ -69,7 +69,8 @@ jobs:
           # Update or create collections/requirements.yml without duplication
           mkdir -p collections
           if [ -f collections/requirements.yml ]; then
-            if ! yq eval '.collections[] | select(.name == "amazon.aws")' collections/requirements.yml > /dev/null 2>&1; then
+            if [ -z "$(yq eval '.collections[] | select(.name == "amazon.aws")' collections/requirements.yml)" ]; then
+            # Collection does not exist, so add it
               yq eval '.collections += [{"name": "amazon.aws"}]' -i collections/requirements.yml
             else
               echo "amazon.aws collection already exists in requirements.yml, not adding again."
