@@ -36,7 +36,7 @@
         "choices": "us-east-1\nap-south-1\nus-west-2",
         "new_question": true,
         "variable": "region",
-        "question_name": "Choose yes or no?",
+        "question_name": "Choose AWS Region",
         "type": "multiplechoice"
       },
       {
