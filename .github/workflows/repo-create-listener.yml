@@ -74,8 +74,12 @@ jobs:
             echo "collection reqs not found in the repository."
           fi
 
-          # Create requirements.txt with boto3 and botocore
-          echo -e "boto3\nbotocore" > requirements.txt
+          # Check if requirements.txt exists, and create it if it doesn't
+          if [ ! -f requirements.txt ]; then
+            echo -e "boto3\nbotocore" > requirements.txt
+          else
+            echo "requirements.txt already exists, not creating a new one."
+          fi
 
           # Configure git
           git config --global user.email "action@github.com"
