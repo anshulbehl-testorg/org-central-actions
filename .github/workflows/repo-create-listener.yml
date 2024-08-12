@@ -48,6 +48,12 @@ jobs:
               yq eval '.events.postStart += ["install-collections"]' -i devfile.yaml
             fi
 
+            # Add pip install command for Python dependencies
+            if ! yq eval '.commands[] | select(.id == "install-python-dependencies")' devfile.yaml; then
+              yq eval '.commands += [{"id": "install-python-dependencies", "exec": {"component": "tooling-container", "commandLine": "pip install -r requirements.txt", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
+              yq eval '.events.postStart += ["install-python-dependencies"]' -i devfile.yaml
+            fi
+            
           # Update devfile.yaml to include git configuration
             if ! yq eval '.commands[] | select(.id == "configure-git")' devfile.yaml; then
               yq eval '.commands += [{"id": "configure-git", "exec": {"component": "tooling-container", "commandLine": "git config --global user.name \"GitHub Action\" && git config --global user.email \"action@github.com\"", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
@@ -68,11 +74,14 @@ jobs:
             echo "collection reqs not found in the repository."
           fi
 
+          # Create requirements.txt with boto3 and botocore
+          echo "boto3\nbotocore" > requirements.txt
+
           # Configure git
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           
           # Add and commit changes
-          git add devfile.yaml collections/requirements.yml
+          git add devfile.yaml collections/requirements.yml requirements.txt
           git commit -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin HEAD
