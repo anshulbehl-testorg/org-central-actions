@@ -49,7 +49,7 @@ jobs:
             fi
 
             # Add pip install command for Python dependencies
-            if ! yq eval '.commands[] | select(.id == "install-python-dependencies")' devfile.yaml; then
+            if ! yq eval '.commands[] | select(.id == "install-python-dependencies")' devfile.yaml > /dev/null 2>&1; then
               yq eval '.commands += [{"id": "install-python-dependencies", "exec": {"component": "tooling-container", "commandLine": "pip install -r requirements.txt", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
               yq eval '.events.postStart += ["install-python-dependencies"]' -i devfile.yaml
             fi
