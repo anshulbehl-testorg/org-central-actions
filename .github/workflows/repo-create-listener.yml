@@ -96,6 +96,13 @@ jobs:
           git commit -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin HEAD
 
+      - name: Copy Directory from Central Actions
+        run: |
+          cp -R ../org-central-actions/comtroller-configuration .
+          git add .
+          git commit -m "Add directory from org-central-actions"
+          git push origin main
+
 
       - name: Set branch protection for main
         env:
