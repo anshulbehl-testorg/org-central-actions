@@ -92,6 +92,8 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
+          ls -la ..
+
           cp -R ../comtroller-configuration .
           git add .
           git commit -m "Add directory from org-central-actions"
