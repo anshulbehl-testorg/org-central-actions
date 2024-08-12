@@ -91,15 +91,10 @@ jobs:
           # Configure git
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          
-          # Add and commit changes
-          git add devfile.yaml collections/requirements.yml requirements.txt
-          git commit -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
-          git push origin HEAD
 
           cp -R ../comtroller_configuration .
           git add .
-          git commit -m "Add directory from org-central-actions"
+          git commit -m "Add directory from org-central-actions and Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin main
 
 
