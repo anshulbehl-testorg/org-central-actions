@@ -43,23 +43,23 @@ jobs:
           
           # Update devfile.yaml
           if [ -f devfile.yaml ]; then
-            if ! yq eval '.commands[] | select(.id == "install-collections")' devfile.yaml; then
+            if [ -z "$(yq eval '.commands[] | select(.id == "install-collections")' devfile.yaml)" ]; then
               yq eval '.commands += [{"id": "install-collections", "exec": {"component": "tooling-container", "commandLine": "ansible-galaxy collection install -r collections/requirements.yml", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
               yq eval '.events.postStart += ["install-collections"]' -i devfile.yaml
             fi
 
             # Add pip install command for Python dependencies
-            if ! yq eval '.commands[] | select(.id == "install-python-dependencies")' devfile.yaml > /dev/null 2>&1; then
+            if [ -z "$(yq eval '.commands[] | select(.id == "install-python-dependencies")' devfile.yaml)" ]; then
               yq eval '.commands += [{"id": "install-python-dependencies", "exec": {"component": "tooling-container", "commandLine": "pip install -r requirements.txt", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
               yq eval '.events.postStart += ["install-python-dependencies"]' -i devfile.yaml
             fi
-            
+
           # Update devfile.yaml to include git configuration
-            if ! yq eval '.commands[] | select(.id == "configure-git")' devfile.yaml; then
+            if [ -z "$(yq eval '.commands[] | select(.id == "configure-git")' devfile.yaml)" ]; then
               yq eval '.commands += [{"id": "configure-git", "exec": {"component": "tooling-container", "commandLine": "git config --global user.name \"GitHub Action\" && git config --global user.email \"action@github.com\"", "workingDir": "${PROJECT_SOURCE}"}}]' -i devfile.yaml
               yq eval '.events.postStart += ["configure-git"]' -i devfile.yaml
            fi
-         
+
           else
             echo "devfile.yml not found in the repository."
           fi
