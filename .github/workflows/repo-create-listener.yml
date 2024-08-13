@@ -65,8 +65,8 @@ jobs:
             git_branch="devel"
 
             # Update devfile to include project dev branch
-            if [ -z "$(yq eval '.projects[] | select(.name == "Demo Project")' devfile.yaml)" ]; then
-              yq eval '.projects += [{"name": "Demo Project", "git": {"remotes": {"origin":"'$git_url'"}, "checkoutFrom": {"revision": "'$git_branch'"}}}]' -i devfile.yaml
+            if [ -z "$(yq eval '.projects[] | select(.name == "demo-project")' devfile.yaml)" ]; then
+              yq eval '.projects += [{"name": "demo-roject", "git": {"remotes": {"origin":"'$git_url'"}, "checkoutFrom": {"revision": "'$git_branch'"}}}]' -i devfile.yaml
             fi
 
           else
