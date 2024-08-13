@@ -91,13 +91,14 @@ jobs:
           # Configure git
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
+          git checkout -b devel
 
           cp -R ../controller_configuration .
           cp ../github-external-workflows/controller-config.yml ./.github/workflows/
           cp ../playbooks/* .
           git add .
-          git commit -m "Add directory from org-central-actions and Update devfile.yaml and add amazon.aws to collections/requirements.yml"
-          git push origin main
+          git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
+          git push origin devel
 
 
       - name: Set branch protection for main
