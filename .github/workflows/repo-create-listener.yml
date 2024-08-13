@@ -61,11 +61,24 @@ jobs:
               yq eval '.events.postStart += ["configure-git"]' -i devfile.yaml
            fi
 
+            git_url="${new_repo}.git"
+            git_branch="devel"
+
+            # Update devfile to include project dev branch
+            if [ -z "$(yq eval '.projects[] | select(.name == "Demo Project")' devfile.yaml)" ]; then
+              yq eval '.projects += [{"name": "Demo Project", "source": {"type": "git", "location": "'$git_url'", "checkoutFrom": {"revision": "'$git_branch'"}}}]' -i devfile.yaml
+            fi
+
           else
             echo "devfile.yml not found in the repository."
           fi
 
+          # Configure git
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push origin main
 
+          git checkout -b devel
 
           # Update or create collections/requirements.yml without duplication
           mkdir -p collections
@@ -87,11 +100,8 @@ jobs:
           else
             echo "requirements.txt already exists, not creating a new one."
           fi
-
-          # Configure git
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git checkout -b devel
+          
+          
 
           cp -R ../controller_configuration .
           cp ../github-external-workflows/controller-config-devel.yml ./.github/workflows/
