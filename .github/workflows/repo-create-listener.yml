@@ -81,8 +81,6 @@ jobs:
           git push origin main
 
           git pull origin main --rebase
-          git push origin devel
-          git pull origin devel --rebase
           git checkout -b devel
 
           # Update or create collections/requirements.yml without duplication
