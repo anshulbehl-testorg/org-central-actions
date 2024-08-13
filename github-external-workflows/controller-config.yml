@@ -3,7 +3,7 @@ name: Configure Controller Projects and Jobs
 on:
   push:
     branches:
-      - main
+      - devel
   workflow_dispatch:
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
           git_url="${{ github.event.repository.clone_url }}"
           yq e -i ".controller_projects[0].name = \"$(echo BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_projects[0].scm_url = \"$git_url\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].name = \"$(echo BLUEPRINT \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[0].name = \"$(echo [DEV] BLUEPRINT \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_templates[0].project = \"$(echo BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
 
       - name: Run Ansible Playbook to Configure Controller
