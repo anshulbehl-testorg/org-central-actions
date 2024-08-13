@@ -82,6 +82,7 @@ jobs:
 
           git checkout -b devel
           git pull origin main --rebase
+          git push origin devel
 
           # Update or create collections/requirements.yml without duplication
           mkdir -p collections
