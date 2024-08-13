@@ -1,7 +1,7 @@
 ---
 controller_projects:
 - name: tmp_proj_name
-  organization: Default
+  organization: "Globo Financial Service"
   scm_branch: main
   scm_clean: 'no'
   scm_delete_on_update: 'no'
@@ -18,5 +18,6 @@ controller_templates:
   survey: "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}"
   project: tmp_proj_name
   playbook: aws_playbook.yml
+  organization: "Globo Financial Service"
   credentials:
   - AWS Credential
