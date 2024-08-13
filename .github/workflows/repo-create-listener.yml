@@ -76,9 +76,12 @@ jobs:
           # Configure git
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
+          git add .
+          git commit -m "Update devfile.yaml"
           git push origin main
 
           git checkout -b devel
+          git pull origin main --rebase
 
           # Update or create collections/requirements.yml without duplication
           mkdir -p collections
