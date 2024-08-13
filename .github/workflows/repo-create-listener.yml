@@ -61,12 +61,12 @@ jobs:
               yq eval '.events.postStart += ["configure-git"]' -i devfile.yaml
            fi
 
-            git_url="${new_repo}.git"
+            git_url="https://github.com/${new_repo}.git"
             git_branch="devel"
 
             # Update devfile to include project dev branch
             if [ -z "$(yq eval '.projects[] | select(.name == "Demo Project")' devfile.yaml)" ]; then
-              yq eval '.projects += [{"name": "Demo Project", "source": {"type": "git", "location": "'$git_url'", "checkoutFrom": {"revision": "'$git_branch'"}}}]' -i devfile.yaml
+              yq eval '.projects += [{"name": "Demo Project", "git": {"remotes": {"origin":"'$git_url'"}, "checkoutFrom": {"revision": "'$git_branch'"}}}]' -i devfile.yaml
             fi
 
           else
