@@ -40,7 +40,7 @@
         "type": "multiplechoice"
       },
       {
-        "question_description": "Teardown?",
+        "question_description": "Choose yes or no?",
         "min": 0,
         "default": "no",
         "max": 0,
@@ -48,7 +48,7 @@
         "choices": "yes\nno",
         "new_question": true,
         "variable": "survey_teardown_response",
-        "question_name": "Choose yes or no?",
+        "question_name": "Teardown?",
         "type": "multiplechoice"
       }
     ]
