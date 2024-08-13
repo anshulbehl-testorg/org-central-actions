@@ -2,6 +2,7 @@
 controller_projects:
 - name: tmp_proj_name
   organization: "Globo Financial Service"
+  allow_override: 'yes'
   scm_branch: main
   scm_clean: 'no'
   scm_delete_on_update: 'no'
