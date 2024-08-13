@@ -94,7 +94,8 @@ jobs:
           git checkout -b devel
 
           cp -R ../controller_configuration .
-          cp ../github-external-workflows/controller-config.yml ./.github/workflows/
+          cp ../github-external-workflows/controller-config-devel.yml ./.github/workflows/
+          cp ../github-external-workflows/controller-config-main.yml ./.github/workflows/
           cp ../playbooks/* .
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
