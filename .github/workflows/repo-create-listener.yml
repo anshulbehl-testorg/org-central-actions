@@ -18,6 +18,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           new_repo="${{ github.event.client_payload.repository }}"
+          new_repo_basename = "${{ github.event.client_payload.repository }}"
           echo "New repository: ${new_repo}"
           curl -X DELETE \
             -H "Accept: application/vnd.github.v3+json" \
@@ -33,6 +34,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           new_repo="${{ github.event.client_payload.repository }}"
+          repo_name=$(basename $new_repo)
+          repo_name=$(echo $repo_name | sed 's/_/-/g')
           echo "New repository: ${new_repo}"
           git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${new_repo}.git
           cd $(basename ${new_repo})
@@ -65,8 +68,8 @@ jobs:
             git_branch="devel"
 
             # Update devfile to include project dev branch
-            if [ -z "$(yq eval '.projects[] | select(.name == "demo-project")' devfile.yaml)" ]; then
-              yq eval '.projects += [{"name": "demo-roject", "git": {"remotes": {"origin":"'$git_url'"}, "checkoutFrom": {"revision": "'$git_branch'"}}}]' -i devfile.yaml
+            if [ -z "$(yq eval '.projects[] | select(.name == "'$repo_name'")' devfile.yaml)" ]; then
+              yq eval '.projects += [{"name": "'$repo_name'", "git": {"remotes": {"origin":"'$git_url'"}, "checkoutFrom": {"revision": "'$git_branch'"}}}]' -i devfile.yaml
             fi
 
           else
