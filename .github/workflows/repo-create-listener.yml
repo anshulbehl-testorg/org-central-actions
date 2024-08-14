@@ -74,7 +74,8 @@ jobs:
           else
             echo "devfile.yml not found in the repository."
           fi
-
+          collection_name = yq eval '.metadata.name' catalog-info.yaml | sed 's/^BLUEPRINT-//'
+          echo "Collection Name: ${collection_name}"
           # Configure git
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
