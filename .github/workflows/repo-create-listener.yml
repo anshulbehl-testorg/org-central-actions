@@ -74,7 +74,7 @@ jobs:
           else
             echo "devfile.yml not found in the repository."
           fi
-          full_name = $(yq eval '.metadata.name' catalog-info.yaml | sed 's/^BLUEPRINT-//')
+          full_name=$(yq eval '.metadata.name' catalog-info.yaml | sed 's/^BLUEPRINT-//')
           echo "Collection Name: ${full_name}"
           collection_namespace=$(echo $full_name | awk -F. '{print $1}')
           collection_name=$(echo $full_name | awk -F. '{print $2}')
