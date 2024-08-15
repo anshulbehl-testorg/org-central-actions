@@ -25,6 +25,7 @@ jobs:
           git_url="${{ github.event.repository.clone_url }}"
           yq e -i ".controller_projects[0].name = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_projects[0].scm_url = \"$git_url\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_projects[0].scm_branch = \"devel\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_templates[0].name = \"$(echo [DEV]BLUEPRINT \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_templates[0].project = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
 
