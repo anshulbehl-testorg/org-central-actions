@@ -21,7 +21,7 @@ controller_templates:
   project: tmp_proj_name
   playbook: aws_playbook.yml
   organization: "Globo Financial Service"
-  ask_scm_branch_on_launch: 'yes'
+  ask_scm_branch_on_launch: 'no'
   credentials:
   - AWS Credential
 
