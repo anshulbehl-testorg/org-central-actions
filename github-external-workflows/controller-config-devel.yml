@@ -49,24 +49,24 @@ jobs:
 
           yq e -i ".controller_workflows[0].name = \"$(echo [DEV]BLUEPRINT WORKFLOW \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
 
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[0].identifier = \"$project_value1\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[0].unified_job_template = \"$project_value1\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[0].success_nodes[0] = \"$project_value2\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[0].identifier = \"$project_value1\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[0].unified_job_template = \"$project_value1\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[0].success_nodes[0] = \"$project_value2\"" controller_configuration/yaml/controller_config.yml
 
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[1].identifier = \"$project_value2\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[1].unified_job_template = \"$project_value2\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[1].success_nodes[0] = \"$project_value3\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[1].identifier = \"$project_value2\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[1].unified_job_template = \"$project_value2\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[1].success_nodes[0] = \"$project_value3\"" controller_configuration/yaml/controller_config.yml
 
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[2].identifier = \"$project_value3\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[2].unified_job_template = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[2].success_nodes[0] = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[2].identifier = \"$project_value3\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[2].unified_job_template = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[2].success_nodes[0] = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
 
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[3].identifier = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[3].unified_job_template = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[3].success_nodes[0] = \"$project_value5\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[3].identifier = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[3].unified_job_template = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[3].success_nodes[0] = \"$project_value5\"" controller_configuration/yaml/controller_config.yml
 
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[4].identifier = \"$project_value5\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].simplified_workflow_nodes[4].unified_job_template = \"$project_value5\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[4].identifier = \"$project_value5\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[4].unified_job_template = \"$project_value5\"" controller_configuration/yaml/controller_config.yml
 
 
       - name: Run Ansible Playbook to Configure Controller
