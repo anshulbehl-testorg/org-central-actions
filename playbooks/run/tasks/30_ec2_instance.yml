@@ -10,6 +10,10 @@
     region: "{{ region }}"
   register: vpc
 
+- name: Set fact device_name to sda2
+  ansible.builtin.set_fact:
+    device_name: /dev/sda2
+
 - name: Find Subnet by VPC and CIDR
   amazon.aws.ec2_vpc_subnet_info:
     filters:
