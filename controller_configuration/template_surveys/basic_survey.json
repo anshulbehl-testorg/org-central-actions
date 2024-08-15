@@ -49,18 +49,6 @@
         "variable": "region",
         "question_name": "Choose AWS Region",
         "type": "multiplechoice"
-      },
-      {
-        "question_description": "Choose yes or no?",
-        "min": 0,
-        "default": "no",
-        "max": 0,
-        "required": true,
-        "choices": "yes\nno",
-        "new_question": true,
-        "variable": "teardown_response",
-        "question_name": "Teardown?",
-        "type": "multiplechoice"
       }
     ]
   }
