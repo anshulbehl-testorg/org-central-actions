@@ -2,13 +2,14 @@
 controller_projects:
 - name: tmp_proj_name
   organization: "Globo Financial Service"
-  allow_override: 'yes'
+  allow_override: 'no'
   scm_branch: main
   scm_clean: 'no'
   scm_delete_on_update: 'no'
   scm_type: git
   scm_update_on_launch: 'no'
   scm_url: tmp_proj_url
+  update_project: 'yes'
 
 controller_templates:
 - name: tmp_jt_name
