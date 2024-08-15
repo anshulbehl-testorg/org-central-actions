@@ -118,7 +118,8 @@ jobs:
           cp ../github-external-workflows/controller-config-main.yml ./.github/workflows/
           cp -r ../playbooks/* .
           #yq eval -i '.roles[] |= select(.role == "aws.aws_operations.run") | .role = env(full_name) + ".run"' aws_playbook.yml
-          sed -i "s/coll_ns.coll_name.run/${full_name}.run/" aws_playbook.yml
+          sed -i '' "s/collns/$collection_namespace/" aws_playbook.yml
+          sed -i '' "s/collname/$collection_name/" aws_playbook.yml
           mv run collections/ansible_collections/$collection_namespace/$collection_name/
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
