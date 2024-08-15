@@ -122,6 +122,7 @@ jobs:
           sed -i "s/collname/$collection_name/" aws_playbook.yml
           rm -rf collections/ansible_collections/$collection_namespace/$collection_name/roles/run/
           mv run collections/ansible_collections/$collection_namespace/$collection_name/roles/
+          rm -f linux_playbook.yml network_playbook.yml site.yml
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin devel
