@@ -59,7 +59,7 @@ jobs:
           yq e -i ".controller_workflows[0].simplified_workflow_nodes[1].success_nodes[0] = \"$project_value3\"" controller_configuration/yaml/controller_config.yml
 
           yq e -i ".controller_workflows[0].simplified_workflow_nodes[2].identifier = \"$project_value3\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_workflows[0].simplified_workflow_nodes[2].unified_job_template = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_workflows[0].simplified_workflow_nodes[2].unified_job_template = \"$project_value3\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_workflows[0].simplified_workflow_nodes[2].success_nodes[0] = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
 
           yq e -i ".controller_workflows[0].simplified_workflow_nodes[3].identifier = \"$project_value4\"" controller_configuration/yaml/controller_config.yml
