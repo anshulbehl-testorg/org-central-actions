@@ -13,5 +13,4 @@ run_vpc_cidr: "10.0.0.0/16"
 run_subnet_cidr: "10.0.1.0/24"
 run_key_name: "wave-demo"
 _volume_size_: "{{ volume_size }}"
-key_name: "{{ key_name }}"
 
