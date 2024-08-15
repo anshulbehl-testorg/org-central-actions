@@ -29,7 +29,7 @@
 - name: Create EC2 Instance if not exists
   amazon.aws.ec2_instance:
     name: "{{ tag_name }}-instance"
-    key_name: "{{ key_name }}"
+    key_name: "{{ run_key_name }}"
     instance_type: "{{ instance_type }}"
     image_id: "{{ ami_id }}"
     network:
