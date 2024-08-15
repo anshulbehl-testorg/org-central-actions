@@ -29,17 +29,23 @@ jobs:
           yq e -i ".controller_templates[0].project = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
 
           # For workflow
-          yq e -i ".controller_templates[1].project = \"$(echo [DEV]Network-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[2].project = \"$(echo [DEV]Security Group-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[3].project = \"$(echo [DEV]EC2 Instance-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[4].project = \"$(echo [DEV]Details-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[5].project = \"$(echo [DEV]Teardown-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[1].name = \"$(echo [DEV]Network-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[2].name = \"$(echo [DEV]Security Group-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[3].name = \"$(echo [DEV]EC2 Instance-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[4].name = \"$(echo [DEV]Details-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[5].name = \"$(echo [DEV]Teardown-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
 
-          project_value1=$(yq e ".controller_templates[1].project" controller_configuration/yaml/controller_config.yml)
-          project_value2=$(yq e ".controller_templates[2].project" controller_configuration/yaml/controller_config.yml)
-          project_value3=$(yq e ".controller_templates[3].project" controller_configuration/yaml/controller_config.yml)
-          project_value4=$(yq e ".controller_templates[4].project" controller_configuration/yaml/controller_config.yml)
-          project_value5=$(yq e ".controller_templates[5].project" controller_configuration/yaml/controller_config.yml)
+          yq e -i ".controller_templates[1].project = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[2].project = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[3].project = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[4].project = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          yq e -i ".controller_templates[5].project = \"$(echo [DEV]BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+
+          project_value1=$(yq e ".controller_templates[1].name" controller_configuration/yaml/controller_config.yml)
+          project_value2=$(yq e ".controller_templates[2].name" controller_configuration/yaml/controller_config.yml)
+          project_value3=$(yq e ".controller_templates[3].name" controller_configuration/yaml/controller_config.yml)
+          project_value4=$(yq e ".controller_templates[4].name" controller_configuration/yaml/controller_config.yml)
+          project_value5=$(yq e ".controller_templates[5].name" controller_configuration/yaml/controller_config.yml)
 
           yq e -i ".controller_workflows[0].name = \"$(echo [DEV]BLUEPRINT WORKFLOW \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
 
