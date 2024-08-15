@@ -118,6 +118,7 @@ jobs:
           cp ../github-external-workflows/controller-config-main.yml ./.github/workflows/
           cp ../playbooks/* .
           yq eval -i '.roles[] |= select(.role == "collns.collname.run") | .role = strenv(new_role) + ".run"' aws_playbook.yml
+          mv run collections/$collection_namespace/$collection_name/
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin devel
