@@ -17,4 +17,4 @@
       - "Key Name:             {{ ec2_instance.instances[0].key_name }}"
       - "Launch Time:          {{ ec2_instance.instances[0].launch_time }}"
       - "Security Groups:      {{ ec2_instance.instances[0].security_groups | map(attribute='group_name') | join(', ') }}"
-  when: ec2_instance.instances is defined and ec2_instance.instances | length > 0
+  when: ec2_instance.instances is defined and ec2_instance.instances[0].state.name != 'terminated'
