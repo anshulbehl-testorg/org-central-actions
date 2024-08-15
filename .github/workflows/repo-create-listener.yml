@@ -117,11 +117,10 @@ jobs:
           cp ../github-external-workflows/controller-config-devel.yml ./.github/workflows/
           cp ../github-external-workflows/controller-config-main.yml ./.github/workflows/
           cp ../playbooks/* .
+          yq eval -i '.roles[] |= select(.role == "collns.collname.run") | .role = strenv(new_role) + ".run"' aws_playbook.yml
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin devel
-
-
       - name: Set branch protection for main
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
