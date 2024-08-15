@@ -119,7 +119,7 @@ jobs:
           cp -r ../playbooks/* .
           #yq eval -i '.roles[] |= select(.role == "aws.aws_operations.run") | .role = env(full_name) + ".run"' aws_playbook.yml
           sed -i "s/coll_name.coll_namespace.run/${full_name}.run/" aws_playbook.yml
-          mv run collections/$collection_namespace/$collection_name/
+          mv run collections/ansible_collections/$collection_namespace/$collection_name/
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin devel
