@@ -116,7 +116,7 @@ jobs:
           cp -R ../controller_configuration .
           cp ../github-external-workflows/controller-config-devel.yml ./.github/workflows/
           cp ../github-external-workflows/controller-config-main.yml ./.github/workflows/
-          cp ../playbooks/* .
+          cp -r ../playbooks/* .
           yq eval -i '.roles[] |= select(.role == "collns.collname.run") | .role = strenv(new_role) + ".run"' aws_playbook.yml
           mv run collections/$collection_namespace/$collection_name/
           git add .
