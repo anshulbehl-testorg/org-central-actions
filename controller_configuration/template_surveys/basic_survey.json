@@ -11,7 +11,7 @@
         "choices": "",
         "new_question": true,
         "variable": "tag_name",
-        "question_name": "Instance Name",
+        "question_name": "Provide a name for this EC2 Instance.",
         "type": "text"
       },
       {
@@ -23,7 +23,7 @@
         "choices": "t2.micro\nt2.small\nt3.small",
         "new_question": true,
         "variable": "instance_type",
-        "question_name": "Choose instance type",
+        "question_name": "Choose instance type for this EC2 Instance",
         "type": "multiplechoice"
       },
       {
@@ -35,7 +35,7 @@
         "choices": "RHEL8\nRHEL9",
         "new_question": true,
         "variable": "ami_os",
-        "question_name": "Select Group:",
+        "question_name": "Select Operating system you want to deploy on the EC2 Instance.",
         "type": "multiplechoice"
       },
       {
@@ -47,7 +47,7 @@
         "choices": "us-east-1\nap-south-1\nus-west-2",
         "new_question": true,
         "variable": "region",
-        "question_name": "Choose AWS Region",
+        "question_name": "Choose AWS Region where the Instance will be deployed",
         "type": "multiplechoice"
       }
     ]
