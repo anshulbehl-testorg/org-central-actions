@@ -65,7 +65,19 @@ controller_templates:
   job_tags: "details"
   credentials:
   - AWS Credential
+
 - name: tmp_jt_name5
+  job_type: run
+  inventory: Blueprint AWS Dynamic
+  execution_environment: "AWS EE"
+  project: tmp_proj_name
+  playbook: tests/test_aws_instance.yml
+  ask_scm_branch_on_launch: 'no'
+  credentials:
+  - AWS Credential
+  - AWS Region Keys
+
+- name: tmp_jt_name6
   job_type: run
   inventory: Demo Inventory
   execution_environment: "AWS EE"
@@ -127,6 +139,14 @@ controller_workflows:
       - all_parents_must_converge: false
         identifier: tmp_jt_name5
         unified_job_template: tmp_jt_name5
+        credentials: []
+        success_nodes:
+          - tmp_jt_name6
+        failure_nodes: []
+        always_nodes: []
+      - all_parents_must_converge: false
+        identifier: tmp_jt_name6
+        unified_job_template: tmp_jt_name6
         credentials: []
         success_nodes: []
         failure_nodes: []
