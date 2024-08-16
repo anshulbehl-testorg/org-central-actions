@@ -44,6 +44,7 @@
     region: "{{ region }}"
     tags:
       Name: "{{ tag_name }}-instance"
+      Type: "wavebp2024-demo"
   register: ec2_instance
 
 # - name: Attach Volume to EC2 Instance
