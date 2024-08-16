@@ -103,7 +103,6 @@ jobs:
             echo "collections/requirements.yml not found, creating a new one."
             echo "---\ncollections:\n  - name: amazon.aws" > collections/requirements.yml
           fi
-          mv collections/requirements.yml collections/reqs.yml
 
           # Check if requirements.txt exists, and create it if it doesn't
           if [ ! -f requirements.txt ]; then
@@ -124,6 +123,7 @@ jobs:
           rm -rf collections/ansible_collections/$collection_namespace/$collection_name/roles/run/
           mv run collections/ansible_collections/$collection_namespace/$collection_name/roles/
           rm -f linux_playbook.yml network_playbook.yml site.yml
+          git mv collections/requirements.yml collections/reqs.yml
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
           git push origin devel
