@@ -50,5 +50,16 @@
         "question_name": "Choose AWS Region where the Instance will be deployed",
         "type": "multiplechoice"
       }
+ #     {
+ #       "question_description": "Volume size, only less than 50 GB is allowed.",
+ #       "min": 0,
+ #       "default": "",
+ #       "max": 50,
+ #       "required": true,
+ #       "new_question": true,
+ #       "variable": "volume_size",
+ #       "question_name": "Add the volume size you want to attach to the EC2 instance.?",
+ #       "type": "integer"
+ #     }
     ]
   }
