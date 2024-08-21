@@ -38,11 +38,11 @@ jobs:
           echo "New repository: ${new_repo}"
           git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${new_repo}.git
           cd $(basename ${new_repo})
+          
+          # Rename the local branch to the new name
           git branch -m main 1.0.0
-          git fetch origin
-          git branch -u origin/1.0.0 1.0.0
-          git remote set-head origin -a
-          git remote prune origin
+          git push origin :main 1.0.0
+          git push origin -u 1.0.0
 
           # Install yq for YAML processing
           sudo apt-get update && sudo apt-get install -y jq
