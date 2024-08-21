@@ -81,7 +81,7 @@ jobs:
            fi
 
             git_url="https://github.com/${new_repo}.git"
-            git_branch="devel"
+            git_branch="1.0.0-devel"
 
             # Update devfile to include project dev branch
             if [ -z "$(yq eval '.projects[] | select(.name == "'$repo_name'")' devfile.yaml)" ]; then
