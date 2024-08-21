@@ -49,7 +49,7 @@
         "variable": "region",
         "question_name": "Choose AWS Region where the Instance will be deployed",
         "type": "multiplechoice"
-      },
+      }
       // {
       //   "question_description": "Volume size, only less than 50 GB is allowed.",
       //   "min": 1,
