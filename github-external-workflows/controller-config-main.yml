@@ -30,7 +30,6 @@ jobs:
           #yq e -i ".controller_templates[0].name = \"$(echo BLUEPRINT \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
           #yq e -i ".controller_templates[0].project = \"$(echo BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
           #yq e -i ".controller_templates[0].organization = \"Operations\"" controller_configuration/yaml/controller_config.yml
-          yq e -i 'del(.controller_templates[0])' controller_configuration/yaml/controller_config.yml
           
           # For workflow
           names=("Network" "Security Group" "EC2 Instance" "Details")
@@ -69,6 +68,8 @@ jobs:
           yq e -i 'del(.controller_workflows[0].simplified_workflow_nodes[3].success_nodes[] | select(. == "tmp_jt_name5"))' controller_configuration/yaml/controller_config.yml
           yq e -i 'del(.controller_workflows[0].simplified_workflow_nodes[4])' controller_configuration/yaml/controller_config.yml
           yq e -i 'del(.controller_workflows[0].simplified_workflow_nodes[4])' controller_configuration/yaml/controller_config.yml
+          yq e -i 'del(.controller_templates[0])' controller_configuration/yaml/controller_config.yml
+
 
       - name: Run Ansible Playbook to Configure Controller
         run: ansible-galaxy collection install infra.controller_configuration && ansible-playbook controller_configuration/controller_configuration.yml
