@@ -38,10 +38,6 @@ jobs:
           echo "New repository: ${new_repo}"
           git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${new_repo}.git
           cd $(basename ${new_repo})
-          
-          # Rename the local branch to the new name
-          git branch -m main 1.0.0
-          git push origin -u 1.0.0
 
 
           # Install yq for YAML processing
@@ -92,7 +88,11 @@ jobs:
           git commit -m "Update devfile.yaml"
           git push origin main
 
+
           git pull origin main --rebase
+          # Rename the local branch to the new name
+          git checkout -b 1.0.0
+          git push origin 1.0.0
           git checkout -b 1.0.0-devel
 
           # Update or create collections/requirements.yml without duplication
