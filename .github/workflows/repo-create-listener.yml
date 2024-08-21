@@ -42,18 +42,6 @@ jobs:
           # Rename the local branch to the new name
           git branch -m main 1.0.0
           git push origin -u 1.0.0
-          curl -X PATCH \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -d '{"default_branch":"1.0.0"}' \
-            https://api.github.com/repos/$new_repo
-          git push origin :main 1.0.0 --force
-          curl -X DELETE \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/$new_repo/branches/1.0.0/protection
-
-
 
 
           # Install yq for YAML processing
@@ -102,9 +90,9 @@ jobs:
           cp ../mkdocs.yml .
           git add .
           git commit -m "Update devfile.yaml"
-          git push origin 1.0.0
+          git push origin main
 
-          git pull origin 1.0.0 --rebase
+          git pull origin main --rebase
           git checkout -b 1.0.0-devel
 
           # Update or create collections/requirements.yml without duplication
@@ -154,6 +142,32 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token $GITHUB_TOKEN" \
             https://api.github.com/repos/$new_repo/branches/1.0.0/protection \
+            -d '{
+                  "required_status_checks": {
+                    "strict": true,
+                    "contexts": []
+                  },
+                  "enforce_admins": true,
+                  "required_pull_request_reviews": {
+                    "dismiss_stale_reviews": false,
+                    "require_code_owner_reviews": false,
+                    "required_approving_review_count": 0
+                  },
+                  "restrictions": null,
+                  "allow_force_pushes": false,
+                  "allow_deletions": false
+                }'
+
+      - name: Set branch protection for main
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          new_repo="${{ github.event.client_payload.repository }}"
+          echo "New repository: ${new_repo}"
+          curl -X PUT \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/$new_repo/branches/main/protection \
             -d '{
                   "required_status_checks": {
                     "strict": true,
