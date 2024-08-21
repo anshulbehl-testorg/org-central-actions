@@ -42,7 +42,14 @@ jobs:
           # Rename the local branch to the new name
           git branch -m main 1.0.0
           git push origin -u 1.0.0
+          curl -X PATCH \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -d '{"default_branch":"1.0.0"}' \
+            https://api.github.com/repos/anshulbehl-testorg/$new_repo
           git push origin :main 1.0.0 --force
+
+
 
 
           # Install yq for YAML processing
