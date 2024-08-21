@@ -48,6 +48,10 @@ jobs:
             -d '{"default_branch":"1.0.0"}' \
             https://api.github.com/repos/$new_repo
           git push origin :main 1.0.0 --force
+          curl -X DELETE \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/$new_repo/branches/1.0.0/protection
 
 
 
@@ -101,7 +105,7 @@ jobs:
           git push origin 1.0.0
 
           git pull origin 1.0.0 --rebase
-          git checkout -b devel
+          git checkout -b 1.0.0-devel
 
           # Update or create collections/requirements.yml without duplication
           mkdir -p collections
@@ -139,8 +143,8 @@ jobs:
           git mv collections/requirements.yml collections/reqs.yml
           git add .
           git commit -m "Add directory from org-central-actions" -m "Update devfile.yaml and add amazon.aws to collections/requirements.yml"
-          git push origin devel
-      - name: Set branch protection for main
+          git push origin 1.0.0-devel
+      - name: Set branch protection for 1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
