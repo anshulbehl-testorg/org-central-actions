@@ -41,7 +41,7 @@ jobs:
           
           # Rename the local branch to the new name
           git branch -m main 1.0.0
-          git push origin :main 1.0.0
+          git push origin :main 1.0.0 --force
           git push origin -u 1.0.0
 
           # Install yq for YAML processing
