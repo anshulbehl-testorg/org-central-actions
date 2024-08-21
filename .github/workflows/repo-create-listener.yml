@@ -38,6 +38,11 @@ jobs:
           echo "New repository: ${new_repo}"
           git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${new_repo}.git
           cd $(basename ${new_repo})
+          git branch -m main 1.0.0
+          git fetch origin
+          git branch -u origin/1.0.0 1.0.0
+          git remote set-head origin -a
+          git remote prune origin
 
           # Install yq for YAML processing
           sudo apt-get update && sudo apt-get install -y jq
@@ -85,9 +90,9 @@ jobs:
           cp ../mkdocs.yml .
           git add .
           git commit -m "Update devfile.yaml"
-          git push origin main
+          git push origin 1.0.0
 
-          git pull origin main --rebase
+          git pull origin 1.0.0 --rebase
           git checkout -b devel
 
           # Update or create collections/requirements.yml without duplication
@@ -136,7 +141,7 @@ jobs:
           curl -X PUT \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/$new_repo/branches/main/protection \
+            https://api.github.com/repos/$new_repo/branches/1.0.0/protection \
             -d '{
                   "required_status_checks": {
                     "strict": true,
