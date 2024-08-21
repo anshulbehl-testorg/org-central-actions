@@ -27,10 +27,11 @@ jobs:
           yq e -i ".controller_projects[0].organization = \"Operations\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_projects[0].scm_url = \"$git_url\"" controller_configuration/yaml/controller_config.yml
           yq e -i ".controller_projects[0].scm_branch = \"1.0.0\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].name = \"$(echo BLUEPRINT \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].project = \"$(echo BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
-          yq e -i ".controller_templates[0].organization = \"Operations\"" controller_configuration/yaml/controller_config.yml
-
+          #yq e -i ".controller_templates[0].name = \"$(echo BLUEPRINT \/ $repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          #yq e -i ".controller_templates[0].project = \"$(echo BLUEPRINT PROJ-$repo_name | tr '[:lower:]' '[:upper:]')\"" controller_configuration/yaml/controller_config.yml
+          #yq e -i ".controller_templates[0].organization = \"Operations\"" controller_configuration/yaml/controller_config.yml
+          yq e -i 'del(.controller_templates[0])' controller_configuration/yaml/controller_config.yml
+          
           # For workflow
           names=("Network" "Security Group" "EC2 Instance" "Details")
           for i in {1..4}; do
