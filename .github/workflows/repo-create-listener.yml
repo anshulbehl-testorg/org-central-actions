@@ -46,7 +46,7 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token $GITHUB_TOKEN" \
             -d '{"default_branch":"1.0.0"}' \
-            https://api.github.com/repos/anshulbehl-testorg/$new_repo
+            https://api.github.com/repos/$new_repo/
           git push origin :main 1.0.0 --force
 
 
